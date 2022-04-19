@@ -4,25 +4,27 @@ using UnityEngine.Events;
 
 public class SpawnPoint : MonoBehaviour
 {
-   [SerializeField] private UnityEvent _spawn;
+   [SerializeField] private UnityEvent _сoinСreated;
    [SerializeField] private Coin _coin;
 
-    private Coroutine _spawnCoin;
+    private Coroutine _spawnCoins;
 
     public void Start()
     {
-        _spawn?.Invoke();
+        
+        _сoinСreated?.Invoke();
     }
 
     public void StartCoroutine()
     {
-        if (_spawnCoin != null)
+        if (_spawnCoins != null)
         {
-            StopCoroutine(_spawnCoin);
+            StopCoroutine(_spawnCoins);
+            _spawnCoins = null;
         }
         else
         {
-            _spawnCoin = StartCoroutine(SpawnCoins());
+            _spawnCoins = StartCoroutine(SpawnCoins());
         }
     }
 
