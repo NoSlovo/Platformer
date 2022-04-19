@@ -1,0 +1,47 @@
+using System.Collections;
+using UnityEngine;
+using UnityEngine.Events;
+
+
+public class SpawnPoint : MonoBehaviour
+{
+   [SerializeField] private UnityEvent _spawn;
+   [SerializeField] private Coin _coin;
+
+    private SpawnPoint _spawnPoint;
+    private Coroutine _spawnCoin;
+
+    private void Awake()
+    {
+        _spawnPoint = GetComponent<SpawnPoint>();
+    }
+
+    public void Start()
+    {
+        _spawn.Invoke();
+    }
+
+    public void StartCoroutine()
+    {
+        if (_spawnCoin != null)
+        {
+            StopCoroutine(_spawnCoin);
+        }
+        else
+        {
+            _spawnCoin = StartCoroutine(SpawnCoins());
+        }
+    }
+
+    private IEnumerator SpawnCoins()
+    {
+        var waitForSecondsReatime = new WaitForSecondsRealtime(10);
+        int maxCoin = 10;
+
+        for (int i = 0; i < maxCoin;i++)
+        {
+            Instantiate(_coin, _spawnPoint.transform);
+            yield return waitForSecondsReatime;
+        }
+    }
+}
