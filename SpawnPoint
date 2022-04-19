@@ -2,19 +2,12 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 
-[RequireComponent(typeof(SpawnPoint))]
 public class SpawnPoint : MonoBehaviour
 {
    [SerializeField] private UnityEvent _spawn;
    [SerializeField] private Coin _coin;
 
-    private SpawnPoint _spawnPoint;
     private Coroutine _spawnCoin;
-
-    private void Awake()
-    {
-        _spawnPoint = GetComponent<SpawnPoint>();
-    }
 
     public void Start()
     {
@@ -40,7 +33,7 @@ public class SpawnPoint : MonoBehaviour
 
         for (int i = 0; i < maxCoin;i++)
         {
-            Instantiate(_coin, _spawnPoint.transform);
+            Instantiate(_coin,transform);
             yield return waitForSecondsReatime;
         }
     }
