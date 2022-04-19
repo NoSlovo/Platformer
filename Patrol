@@ -18,15 +18,20 @@ public class Patrol : MonoBehaviour
 
     private void StartMove()
     {
+        int vectorY;
+
         if (_groundInfo.collider == false)
         {
-            if (_movengRight != true ? _movengRight = true : _movengRight = false)
-            {
-                transform.eulerAngles = new Vector3(0, -180, 0);
-            }
-            else
-            {
-                transform.eulerAngles = new Vector3(0, 0, 0);
+            vectorY = _movengRight ? vectorY = -180 : vectorY = 0;
+            transform.eulerAngles = new Vector3(0, vectorY, 0);
+
+            if (_movengRight == true)
+            {    
+                _movengRight = false;
+            } 
+            else 
+            { 
+                _movengRight = true;
             }
         }
     }
