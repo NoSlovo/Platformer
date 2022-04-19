@@ -1,0 +1,38 @@
+using UnityEngine;
+
+[RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(SpriteRenderer))]
+
+public class PlayAnimation : MonoBehaviour
+{
+    [SerializeField] private Animator _animator;
+
+    private SpriteRenderer _spriteRenderer;
+
+    const string Move = "Move";
+    const string Idle = "idle";
+
+    private void Awake()
+    {
+        _spriteRenderer = GetComponent<SpriteRenderer>();
+    }
+
+    private void Update()
+    {
+
+        if (Input.GetKey(KeyCode.A))
+        {
+            _animator.Play(Move);
+            _spriteRenderer.flipX = true;
+        }
+        else if (Input.GetKey(KeyCode.D))
+        {
+            _animator.Play(Move);
+            _spriteRenderer.flipX = false;
+        }
+        else
+        {
+            _animator.Play(Idle);
+        }
+    }
+}
