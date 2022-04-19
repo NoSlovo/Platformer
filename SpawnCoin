@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class SpawnCoin : MonoBehaviour
+public class CoinMaker: MonoBehaviour
 {
    [SerializeField] private UnityEvent _сoinСreated;
    [SerializeField] private Coin _coin;
