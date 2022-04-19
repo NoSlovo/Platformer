@@ -3,18 +3,18 @@ using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(SpriteRenderer))]
+[RequireComponent(typeof(Rigidbody2D))]
 
-public class Controller : MonoBehaviour
+public class Movement : MonoBehaviour
 {
     [SerializeField] private Vector2 Velocity;
     [SerializeField] private LayerMask LayerMask;
     [SerializeField] private Animator _animator;
-    [SerializeField] private SpawnPoint _spawnPoint;
 
     private Vector2 targetVelocity;
     private bool grounded;
     private Vector2 graundNoraml;
-    private Rigidbody2D rb2d;
+    private Rigidbody2D _rigidbody;
     private ContactFilter2D contactFilter;
     private RaycastHit2D[] hitBuffer = new RaycastHit2D[16];
     private List<RaycastHit2D> hitBufferList = new List<RaycastHit2D>();
@@ -42,9 +42,8 @@ public class Controller : MonoBehaviour
 
     private void OnEnable()
     {
-        rb2d = GetComponent<Rigidbody2D>();
+        _rigidbody = GetComponent<Rigidbody2D>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
-        _spawnPoint = GetComponent<SpawnPoint>();
     }
 
 
@@ -92,20 +91,20 @@ public class Controller : MonoBehaviour
         Vector2 moveAlongGround = new Vector2(graundNoraml.y, - graundNoraml.x);
         Vector2 move = moveAlongGround * deltaPosition.x;
 
-        Movement(move,false);
+        MovePlayer(move,false);
 
         move = Vector2.up * deltaPosition.y;
 
-        Movement(move,true);
+        MovePlayer(move,true);
     }
 
-    private void Movement(Vector2 move,bool yMovement)
+    private void MovePlayer(Vector2 move,bool yMovement)
     {
         float distance = move.magnitude;
 
         if (distance > minMoveDistance)
         {
-            int count = rb2d.Cast(move, contactFilter, hitBuffer, distance + shellRadius);
+            int count = _rigidbody.Cast(move, contactFilter, hitBuffer, distance + shellRadius);
             hitBufferList.Clear();
 
             for(int i = 0; i < count; i++)
@@ -138,7 +137,6 @@ public class Controller : MonoBehaviour
                 distance = modifiedDistance < distance ? modifiedDistance : distance;
             }  
         }
-
-        rb2d.position = rb2d.position + move.normalized * distance;
+        _rigidbody.position = _rigidbody.position + move.normalized * distance;
     }
 }
