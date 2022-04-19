@@ -1,23 +1,28 @@
 using UnityEngine;
 
-public class Trolling : MonoBehaviour
+public class Patrol : MonoBehaviour
 {
     [SerializeField] private Transform _graundDetection;
 
     private float _speed = 2f;
     private float _distance = 2f;
     private bool _movengRight = true;
-   
+    private RaycastHit2D groundInfo;
+
     private void Update()
     {
         transform.Translate(Vector2.right * _speed * Time.deltaTime);
-        RaycastHit2D groundInfo = Physics2D.Raycast(_graundDetection.position,Vector2.down, _distance);
-        
-        if(groundInfo.collider == false)
+        groundInfo = Physics2D.Raycast(_graundDetection.position,Vector2.down, _distance);
+        StartMove();
+    }
+
+    private void StartMove()
+    {
+        if (groundInfo.collider == false)
         {
             if (_movengRight == true)
             {
-                transform.eulerAngles = new Vector3(0,-180,0);
+                transform.eulerAngles = new Vector3(0, -180, 0);
                 _movengRight = false;
             }
             else
