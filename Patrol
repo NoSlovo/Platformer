@@ -7,28 +7,26 @@ public class Patrol : MonoBehaviour
     private float _speed = 2f;
     private float _distance = 2f;
     private bool _movengRight = true;
-    private RaycastHit2D groundInfo;
+    private RaycastHit2D _groundInfo;
 
     private void Update()
     {
         transform.Translate(Vector2.right * _speed * Time.deltaTime);
-        groundInfo = Physics2D.Raycast(_graundDetection.position,Vector2.down, _distance);
+        _groundInfo = Physics2D.Raycast(_graundDetection.position,Vector2.down, _distance);
         StartMove();
     }
 
     private void StartMove()
     {
-        if (groundInfo.collider == false)
+        if (_groundInfo.collider == false)
         {
-            if (_movengRight == true)
+            if (_movengRight != true ? _movengRight = true : _movengRight = false)
             {
                 transform.eulerAngles = new Vector3(0, -180, 0);
-                _movengRight = false;
             }
             else
             {
                 transform.eulerAngles = new Vector3(0, 0, 0);
-                _movengRight = true;
             }
         }
     }
