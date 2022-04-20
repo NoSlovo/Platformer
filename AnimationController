@@ -3,14 +3,14 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(SpriteRenderer))]
 
-public class PlayAnimation : MonoBehaviour
+public class AnimationController : MonoBehaviour
 {
     [SerializeField] private Animator _animator;
-
     private SpriteRenderer _spriteRenderer;
 
     const string Move = "Move";
     const string Idle = "idle";
+
 
     private void Awake()
     {
@@ -19,16 +19,21 @@ public class PlayAnimation : MonoBehaviour
 
     private void Update()
     {
+        RotationController();
+    }
 
-        if (Input.GetKey(KeyCode.A))
+    private void RotationController()
+    {
+        int rotation;
+        int rihtRotation = 0;
+        int leftRotation = -180;
+
+        rotation = Input.GetKey(KeyCode.A) ? rotation = leftRotation : rotation = rihtRotation;
+        transform.eulerAngles = new Vector3(0, rotation, 0);
+
+        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
         {
             _animator.Play(Move);
-            _spriteRenderer.flipX = true;
-        }
-        else if (Input.GetKey(KeyCode.D))
-        {
-            _animator.Play(Move);
-            _spriteRenderer.flipX = false;
         }
         else
         {
