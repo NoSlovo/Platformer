@@ -10,7 +10,7 @@ public class Purse : MonoBehaviour
     {
         if (collision.TryGetComponent(out Coin coin))
         {
-            _purse += 1;
+            _purse += coin.Valume;
             Destroy(coin.gameObject);
         }
     }
