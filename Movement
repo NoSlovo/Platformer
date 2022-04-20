@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-
 public class Movement : MonoBehaviour
 {
     [SerializeField] private Vector2 _velocity;
@@ -12,6 +11,7 @@ public class Movement : MonoBehaviour
     private Vector2 _targetVelocity;
     private bool _grounded;
     private Vector2 _graundNoraml;
+    private float _speed = 6.5f;
     private Rigidbody2D _rigidbody;
     private ContactFilter2D _contactFilter;
     private RaycastHit2D[] _hitBuffer = new RaycastHit2D[16];
@@ -19,8 +19,7 @@ public class Movement : MonoBehaviour
     private float _minMoveDistance = 0.001f;
     private float _shellRadius = 0.01f;
     private float _gravityModifier = 1f;
-    private float _minGroundNormalyY = .65f;
-    private float _speed = 6.5f;  
+    private float _minGroundNormalyY = .65f; 
 
     private void OnEnable()
     {
@@ -49,7 +48,6 @@ public class Movement : MonoBehaviour
     {
         _velocity += _gravityModifier * Physics2D.gravity * Time.deltaTime;
         _velocity.x = _targetVelocity.x;
-
         _grounded = false;
 
         Vector2 deltaPosition = _velocity * Time.deltaTime * _speed;
@@ -63,7 +61,7 @@ public class Movement : MonoBehaviour
         MovePlayer(move, true);
     }
 
-    private void MovePlayer(Vector2 move, bool yMovement)
+    public void MovePlayer(Vector2 move, bool yMovement)
     {
         float distance = move.magnitude;
 
